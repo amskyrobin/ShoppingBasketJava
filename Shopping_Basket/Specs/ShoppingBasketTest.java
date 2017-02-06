@@ -2,12 +2,14 @@ import static org.junit.Assert.assertEquals;
 import org.junit.*;
 import Basket.*;
 import Item.*;
+import Customer.*;
 
 public class ShoppingBasketTest{
 
   Basket basket;
   Item item;
   Item itemBogof;
+  Customer customer;
 
   @Before
   public void before(){
@@ -15,6 +17,7 @@ public class ShoppingBasketTest{
     basket = new Basket();
     item = new Item(100, "sausage", false);
     itemBogof = new Item(150, "banana", true);
+    customer = new Customer("Amy", true);
   }
 
   @Test
@@ -76,8 +79,21 @@ public class ShoppingBasketTest{
 
   @Test
   public void canCheckIfTenPercentDiscount(){
-    Basket discountedBasket = basket.addItem(itemBogof);
-    discountedBasket.discountTen();
-    assertEquals(135, basket.total(), 0.00);
+    basket.addItem(itemBogof);
+    basket.discountTen();
+    assertEquals(135, basket.discountTen(), 0.00);
+  }
+
+  @Test
+  public void canCheckIfCustomerHasLoyaltyCard(){
+    customer.getLoyaltyCard();
+    assertEquals(true, customer.getLoyaltyCard());
+  }
+
+  @Test
+  public void canCheckIfLoyaltyCardActivatesDiscount(){
+    basket.addItem(itemBogof);
+    basket.discountLoyaltyCard(customer);
+    assertEquals(132.3, basket.discountLoyaltyCard(customer), 0.00);
   }
 }

@@ -1,6 +1,7 @@
 package Item;
 import java.util.*;
 import Basket.*;
+import Customer.*;
 
 public class Item{
 

@@ -1,6 +1,7 @@
 package Basket;
 import java.util.*;
 import Item.*;
+import Customer.*;
 
 
 public class Basket {
@@ -25,9 +26,9 @@ public class Basket {
   public void removeItem(Item item){
     itemList.remove(item);
     if(item.getBogof() == true){
-    itemList.remove(item.getFreeItem());
+      itemList.remove(item.getFreeItem());
+    }
   }
-}
 
   public void empty(){
     itemList.clear();
@@ -40,5 +41,23 @@ public class Basket {
       basketTotal += item.getPrice();
     }
     return basketTotal;
+  }
+
+
+  public double discountTen(){
+    double discountBasket = total();
+    if(discountBasket > 20){
+      discountBasket -= discountBasket*0.10;
+    }
+    return discountBasket;
+  }
+
+  public double discountLoyaltyCard(Customer customer){
+    double loyaltybasket = total();
+    if(customer.getLoyaltyCard() == true){
+      loyaltybasket -= loyaltybasket*0.10;
+      loyaltybasket -= loyaltybasket*0.02;
+    }
+    return loyaltybasket;
   }
 }
